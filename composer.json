@@ -1,0 +1,21 @@
+{
+  "name": "qweas/bienes-raices-poo_php_inicio",
+  "description": "Creando un proyecto con POO",
+  "type": "project",
+  "authors": [
+    {
+      "name": "victor garcia",
+      "email": "moyosxtouch@gmail.com"
+    }
+  ],
+  "require": {
+    "intervention/image": "^2.7"
+  },
+  "autoload": {
+    "psr-4": {
+      "Model\\": "./models",
+      "MVC\\": "./",
+      "Controllers\\": "./controllers"
+    }
+  }
+}
