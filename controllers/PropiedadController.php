@@ -65,7 +65,47 @@ $image->save(CARPETA_IMAGENES.$nombreImagen);
 
   $router->render('propiedades/crear',['propiedad'=>$propiedad, 'vendedores'=>$vendedores, 'errores'=>$errores]) ;
   }
-  public static function actualizar() {
-    echo"actualizar propiedad";
+  public static function actualizar(Router $router) {
+ $id=validarORedireccionar('/admin');
+ $propiedad=Propiedad::find($id);
+ $errores=Propiedad::getErrores();
+    $vendedores=Vendedor::all();
+
+    //Metodo Post para actualizar
+    if($_SERVER['REQUEST_METHOD'] === 'POST') {
+ 
+        // Asignar los atributos
+        $args = $_POST['propiedad'];
+        $propiedad->sincronizar($args);
+ 
+        // Validación 
+        $errores = $propiedad->validar();     
+ 
+ 
+ 
+        // SUBIDA DE ARCHIVOS
+        // Generar un nombre único
+        $nombreImagen = md5( uniqid(rand(), true ) ) . ".jpg";
+ 
+        if($_FILES['propiedad']['tmp_name']['imagen']) {
+            $image = Image::make($_FILES['propiedad']['tmp_name']['imagen'])->fit(800, 600); 
+            $propiedad->setImagen($nombreImagen);
+        }
+ 
+ 
+ 
+        if( empty($errores) ) {
+            // Almacenar la imagen
+         if($_FILES['propiedad']['tmp_name']['imagen']) {
+                $image->save(CARPETA_IMAGENES . $nombreImagen);
+            }
+ 
+            $propiedad->guardar();
+        }
+    }
+ 
+
+ $router->render('/propiedades/actualizar',['propiedad'=>$propiedad,'errores'=>$errores,'vendedores'=>$vendedores]);
   }
+  
 }
