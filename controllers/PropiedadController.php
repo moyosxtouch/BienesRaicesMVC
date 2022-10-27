@@ -8,8 +8,9 @@ class  PropiedadController
 {
   public static function index(Router $router) {
     $propiedades=Propiedad::all();
+    $vendedores=Vendedor::all();
     $resultado= $_GET['resultado'] ?? null;
-  $router->render('propiedades/admin',['propiedades'=> $propiedades, 'resultado'=>$resultado]);
+  $router->render('propiedades/admin',['propiedades'=> $propiedades, 'resultado'=>$resultado,'vendedores'=>$vendedores]);
   }
   public static function crear(Router $router) {
     $propiedad= new Propiedad;
