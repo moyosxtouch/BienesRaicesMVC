@@ -28,7 +28,7 @@ class  PaginasController {
     public static function entrada(Router $router) {
     $router->render('paginas/entrada');
   }
-    public static function contacto() {
-    echo "Desde contacto";
+    public static function contacto(Router $router) {
+    $router->render('paginas/contacto');
   }
 }
