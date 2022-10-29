@@ -16,8 +16,11 @@ class  PaginasController {
       $propiedades=Propiedad::all();
     $router->render('paginas/propiedades',['propiedades'=>$propiedades]);
   }
-    public static function propiedad() {
-    echo "Desde propiedad";
+    public static function propiedad(Router $router) {
+      $id=validarORedireccionar('/propiedades');
+      //buscar la propiedad por su id
+      $propiedad=Propiedad::find($id);
+    $router->render('paginas/propiedad',['propiedad'=>$propiedad]);
   }
     public static function blog() {
     echo "Desde blog";
