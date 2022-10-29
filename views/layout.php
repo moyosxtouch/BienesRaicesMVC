@@ -37,7 +37,7 @@ if(!isset($inicio)) {
 
                 <nav id="/navegacion" class="navegacion">
                     <a href="/nosotros">Nosotros</a>
-                    <a href="/anuncios">Anuncios</a>
+                    <a href="/propiedades">Anuncios</a>
                     <a href="/blog">Blog</a>
                     <a href="/contacto">Contacto</a>
                     <?php if($auth): ?>
