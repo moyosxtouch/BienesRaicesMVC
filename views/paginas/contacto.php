@@ -4,7 +4,7 @@
 <main class="contenedor seccion contenido-centrado">
     <h2 class="fw-300 centrar-texto">Llena el formulario de Contacto</h2>
 
-    <form class="formulario" action="/contacto" method="POST">
+  <form class="formulario" method="POST" action="/contacto">
         <fieldset>
             <legend>Información Personal</legend>
             <label for="nombre">Nombre:</label>
