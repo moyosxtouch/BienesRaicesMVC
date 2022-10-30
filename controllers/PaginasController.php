@@ -30,6 +30,7 @@ class  PaginasController {
     $router->render('paginas/entrada');
   }
     public static function contacto(Router $router) {
+      $mensaje=null;
       if($_SERVER['REQUEST_METHOD']==='POST') {
           // Validar 
             $respuestas = $_POST['contacto'];
@@ -73,13 +74,13 @@ $mail->CharSet='UTF-8';
             $mail->AltBody = 'Esto es texto alternativo';
 //Enviar el email
  if($mail->send()){
-  echo "Mensaje enviado correctamente";
+  $mensaje= "Mensaje enviado correctamente";
 }else {
-  echo"El Mensaje no se pudo enviar...";
+   $mensaje="El Mensaje no se pudo enviar...";
 }
 
     }
-    $router->render('paginas/contacto');
+    $router->render('paginas/contacto',['mensaje'=>$mensaje]);
   }
 }
      
