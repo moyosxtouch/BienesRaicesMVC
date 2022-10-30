@@ -13,6 +13,11 @@ public function post($url, $fn) {
 
 
   public function comprobarRutas() {
+    session_start();
+    $auth=$_SESSION['login'] ?? null;
+   // debuguear($auth);
+//Arreglo de rutas protegidas
+$rutas_protegidas=['/admin','/propiedades/crear','/propiedades/actualizar','/propiedades/eliminar','/vendedores/crear','/vendedores/actualizar','/vendedores/eliminar'];
  
    $urlActual=$_SERVER['PATH_INFO'] ?? '/';
    $metodo=$_SERVER['REQUEST_METHOD'];
@@ -21,6 +26,11 @@ if($metodo==='GET') {
 }else {
     $fn=$this->rutasPOST[$urlActual] ?? null;
 }
+//Proteger las rutas
+if(in_array($urlActual, $rutas_protegidas)&& !$auth) {
+  header('Location: /');
+}
+
 if($fn) {
   //La URL existe y hay una funcion asociada
  
