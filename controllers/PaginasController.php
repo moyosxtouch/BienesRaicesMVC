@@ -31,6 +31,9 @@ class  PaginasController {
   }
     public static function contacto(Router $router) {
       if($_SERVER['REQUEST_METHOD']==='POST') {
+          // Validar 
+            $respuestas = $_POST['contacto'];
+       // debuguear($_POST);
 //Crear una instancia de PHPMailer
 $mail=new PHPMailer();
 //configurar smtp
@@ -42,18 +45,34 @@ $mail->Password='0128189faff3e5';
 $mail->SMTPSecure='tls';
 $mail->Port='2525';
 //Configurar el contenido del mail
-$mail->setFrom('admin@bienesraices.com');
+  $mail->setFrom('admin@bienesraices.com', $respuestas['nombre']);
 $mail->addAddress('admin@bienesraices.com', 'BienesRaices.com');
 $mail->Subject='Tienes un nuevo mensaje';
 //Habilitar HTML
 $mail->isHTML(true);
 $mail->CharSet='UTF-8';
 //Definir el contenido
-$contenido='<html><p>Tienes un nuevo mensaje</p></html>';
-$mail->Body=$contenido;
-$mail->AltBody='Esto es texto alternativo sin HTML';
+
+            $contenido = '<html>';
+            $contenido .= "<p><strong>Has Recibido un email:</strong></p>";
+            $contenido .= "<p>Nombre: " . $respuestas['nombre'] . "</p>";
+            $contenido .= "<p>Mensaje: " . $respuestas['mensaje'] . "</p>";
+            $contenido .= "<p>Vende o Compra: " . $respuestas['opciones'] . "</p>";
+            $contenido .= "<p>Presupuesto o Precio: $" . $respuestas['presupuesto'] . "</p>";
+
+            if($respuestas['contacto'] === 'telefono') {
+                $contenido .= "<p>Eligió ser Contactado por Teléfono:</p>";
+                $contenido .= "<p>Su teléfono es: " .  $respuestas['telefono'] ." </p>";
+                $contenido .= "<p>En la Fecha y hora: " . $respuestas['fecha'] . " - " . $respuestas['hora']  . " Horas</p>";
+            } else {
+                $contenido .= "<p>Eligio ser Contactado por Email:</p>";
+                $contenido .= "<p>Su Email  es: " .  $respuestas['email'] ." </p>";
+            }
+             $contenido .= '</html>';
+            $mail->Body = $contenido;
+            $mail->AltBody = 'Esto es texto alternativo';
 //Enviar el email
-if($mail->send()) {
+ if($mail->send()){
   echo "Mensaje enviado correctamente";
 }else {
   echo"El Mensaje no se pudo enviar...";
@@ -63,3 +82,4 @@ if($mail->send()) {
     $router->render('paginas/contacto');
   }
 }
+     
